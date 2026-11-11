@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Global Rating</title>
+<style>
+:root{color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;padding:0;background:#fff;
+  font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,
+  sans-serif;color:#1a1a2e}
+.wrap{max-width:660px;margin:0 auto;padding:2px}
+h2{margin:0 0 8px;font-size:17px;letter-spacing:-.2px}
+h3.pos{margin:22px 0 6px;font-size:14px;letter-spacing:-.1px}
+col.c-pos{width:44px}
+.pick{margin:0 0 12px}
+select{font:inherit;font-size:13px;padding:4px 8px;border:1px solid #d8d9e3;
+  border-radius:8px;background:#fff;color:#1a1a2e;max-width:100%}
+section{display:none}
+section.on{display:block}
+table{border-collapse:collapse;width:100%;table-layout:fixed}
+col.c-rk{width:38px}
+col.c-fl{width:26px}
+col.c-pl{width:auto}
+col.c-age{width:58px}
+col.c-cp{width:30%}
+col.c-rat{width:58px}
+col.c-gp{width:42px}
+col.c-num{width:50px}
+th,td{padding:5px 6px;border-bottom:1px solid #ecedf3;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:#6a6a80;
+  text-align:right;border-bottom:1px solid #d8d9e3}
+th.l,td.l{text-align:left}
+td{text-align:right;font-variant-numeric:tabular-nums}
+td.rk{color:#9a9ab0;font-size:12px;overflow:visible;text-overflow:clip}
+td.fl{width:1%;padding-right:0}
+td.fl img{display:block;width:19px;height:auto;border-radius:2px}
+/* The name wraps rather than truncates: it is the one thing a reader cannot
+   reconstruct from a fragment. */
+td.pl{font-weight:600}
+/* v1.31.2: the team wraps instead of the name. */
+td.tm{color:#5a5a72;font-size:12px;white-space:normal;line-height:1.25}
+/* COLUMNS SIZED BY WHAT IS IN THEM (v1.31.2): the name column as wide as the
+   longest name in this list, the team column whatever is left. */
+table{table-layout:auto}
+col.c-pl,col.c-cp{width:auto}
+td.pl,td.age,td.rat,td.st{overflow:visible;text-overflow:clip}
+td.tm{min-width:90px}
+@media(max-width:600px){
+  section.on{overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+td.rat{font-weight:700;color:#8a5a00}
+/* Left, with its header: the age sits beside the name and reads as part of it,
+   and a right-aligned header over a left-aligned column looks like a mistake. */
+td.age{color:#5a5a72;font-size:12px;font-variant-numeric:tabular-nums;
+  text-align:left}
+/* The hover is the only place the full breakdown lives, so the cell says it is
+   there rather than leaving a reader to discover it. */
+td.tm[title]{cursor:help;text-decoration:underline dotted #c8c8d8}
+tr:nth-child(even) td{background:#fafafd}
+th[data-s]{cursor:pointer}
+th[data-s]:hover{color:#1a1a2e}
+th[aria-sort]{color:#8a5a00}
+th[aria-sort="descending"]::after{content:" ↓"}
+th[aria-sort="ascending"]::after{content:" ↑"}
+.none{color:#8a8aa0;font-size:12px;margin:4px 0 0}
+.unk{color:#b08030;font-weight:700;margin-left:2px}
+.key{color:#8a8aa0;font-size:11px;margin:8px 0 0}
+/* LAST 365 DAYS (v1.31): three columns, and a click opens a line per
+   competition under the player. */
+th.st,td.st{width:44px;color:#3a3a52;padding-left:2px;text-overflow:clip}
+th.st{letter-spacing:0}
+col.c-cp{width:24%}
+tr[data-b]{cursor:pointer}
+tr[data-b]:hover td{background:#f4f1ea}
+tr.open td{background:#f4f1ea;border-bottom-color:transparent}
+tr.sub td{background:#fbf9f4;color:#5a5a72;font-size:12px;
+  padding-top:3px;padding-bottom:3px;border-bottom:1px solid #f1ece0}
+tr.sub td.lg{white-space:normal;text-align:left;padding-left:2px}
+@media(max-width:560px){
+  th.st,td.st{width:34px}
+  col.c-cp{width:20%}
+}
+@media(max-width:560px){
+  th,td{padding:5px 2px;font-size:13px}
+  th{font-size:10px;letter-spacing:.2px}
+  col.c-rk{width:32px}
+  col.c-fl{width:22px}
+  col.c-age{width:48px}
+  col.c-cp{width:26%}
+  col.c-rat{width:48px}
+  col.c-gp{width:30px}
+  col.c-num{width:38px}
+}
+</style></head><body><div class="wrap">
+<h2>Global Rating · Free Agents</h2>
+
+<section id="freeagents" class="on"><table><colgroup><col class="c-rk"><col class="c-fl"><col class="c-pl">
+<col class="c-age"><col class="c-pos"><col class="c-cp"><col class="c-rat"><col class="c-gp"></colgroup>
+<thead><tr><th></th><th></th><th class="l" data-s="t">Player</th>
+<th class="l" data-s="t">Age</th><th class="l" data-s="t">Pos</th>
+<th class="l" data-s="t">Team</th>
+<th data-s="n">Rat</th><th data-s="n">GP</th><th class="st" data-s="n">PTS</th><th class="st" data-s="n">REB</th><th class="st" data-s="n">AST</th></tr></thead><tbody><tr data-b="NBA|37|17.6|5.4|7.5"><td class="rk">1</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Kevin Porter</td><td class="age">26-191</td><td class="age">PG</td><td class="l tm" title="NBA: 37">Free Agent</td><td class="rat">5.78</td><td>37</td><td class="st">17.6</td><td class="st">5.4</td><td class="st">7.5</td></tr>
+<tr data-b="NBA|79|8.0|3.8|2.2"><td class="rk">2</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Bruce Brown</td><td class="age">30-088</td><td class="age">SF</td><td class="l tm" title="NBA: 79">Free Agent</td><td class="rat">5.78</td><td>79</td><td class="st">8.0</td><td class="st">3.8</td><td class="st">2.2</td></tr>
+<tr data-b="NBA|37|8.5|2.5|1.8"><td class="rk">3</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Jaden Ivey</td><td class="age">24-271</td><td class="age">SG</td><td class="l tm" title="NBA: 37">Free Agent</td><td class="rat">4.59</td><td>37</td><td class="st">8.5</td><td class="st">2.5</td><td class="st">1.8</td></tr>
+<tr data-b="NBA|34|11.6|1.8|2.6"><td class="rk">4</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Cam Thomas</td><td class="age">25-029</td><td class="age">SG</td><td class="l tm" title="NBA: 34">Free Agent</td><td class="rat">3.91</td><td>34</td><td class="st">11.6</td><td class="st">1.8</td><td class="st">2.6</td></tr>
+<tr data-b="NBA|34|7.7|4.0|4.6"><td class="rk">5</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Vince Williams Jr</td><td class="age">26-073</td><td class="age">SF</td><td class="l tm" title="NBA: 34">Free Agent</td><td class="rat">3.38</td><td>34</td><td class="st">7.7</td><td class="st">4.0</td><td class="st">4.6</td></tr>
+<tr data-b="NBA|23|5.5|2.3|3.5;G League|19|22.4|4.1|8.5"><td class="rk">6</td><td class="fl"><img src="https://flagcdn.com/w40/fr.png" alt="" loading="lazy"></td><td class="l pl">Killian Hayes</td><td class="age">25-107</td><td class="age">PG</td><td class="l tm" title="NBA: 23; G League: 19">Free Agent</td><td class="rat">2.63</td><td>42</td><td class="st">13.1</td><td class="st">3.1</td><td class="st">5.8</td></tr>
+<tr data-b="Spain|28|15.0|2.1|2.0;Champions League|7|8.9|1.7|1.6"><td class="rk">7</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Isaiah Wong</td><td class="age">25-287</td><td class="age">PG</td><td class="l tm" title="Spain: 28; Champions League: 7">Long Island Nets</td><td class="rat">2.11</td><td>35</td><td class="st">13.7</td><td class="st">2.0</td><td class="st">1.9</td></tr>
+<tr data-b="NBA|53|5.5|2.3|0.8;NBA Preseason|3|1.0|1.0|0.3;G League|2|24.0|6.5|2.0"><td class="rk">8</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Ochai Agbaji</td><td class="age">26-205</td><td class="age">SG</td><td class="l tm" title="NBA: 53; G League: 2">Austin Spurs</td><td class="rat">2.10</td><td>55</td><td class="st">5.9</td><td class="st">2.4</td><td class="st">0.8</td></tr>
+<tr data-b="G League|29|15.4|2.6|8.9;NBA|11|15.0|3.4|6.7;NBA Preseason|2|9.0|0.5|1.0"><td class="rk">9</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Kennedy Chandler</td><td class="age">24-056</td><td class="age">PG</td><td class="l tm" title="G League: 29; NBA: 11">Valley Suns</td><td class="rat">2.10</td><td>40</td><td class="st">15.0</td><td class="st">2.7</td><td class="st">8.0</td></tr>
+<tr data-b="G League|32|6.6|5.4|4.5;NBA|15|8.1|3.8|4.1;NBA Preseason|3|6.7|1.3|2.0"><td class="rk">10</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Bez Mbeng</td><td class="age">23-193</td><td class="age">PG</td><td class="l tm" title="G League: 32; NBA: 15">Sioux Falls Skyforce</td><td class="rat">2.05</td><td>47</td><td class="st">7.1</td><td class="st">4.7</td><td class="st">4.2</td></tr>
+<tr data-b="NBA|56|6.4|2.2|2.2"><td class="rk">11</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Rob Dillingham</td><td class="age">21-311</td><td class="age">PG</td><td class="l tm" title="NBA: 56">Free Agent</td><td class="rat">2.05</td><td>56</td><td class="st">6.4</td><td class="st">2.2</td><td class="st">2.2</td></tr>
+<tr data-b="NBA|56|4.4|1.0|1.4"><td class="rk">12</td><td class="fl"><img src="https://flagcdn.com/w40/ng.png" alt="" loading="lazy"></td><td class="l pl">Gabe Vincent</td><td class="age">30-150</td><td class="age">PG</td><td class="l tm" title="NBA: 56">Free Agent</td><td class="rat">2.03</td><td>56</td><td class="st">4.4</td><td class="st">1.0</td><td class="st">1.4</td></tr>
+<tr data-b="G League|30|20.1|5.4|2.6;NBA|12|10.8|4.2|1.0;NBA Preseason|1|0.0|0.0|0.0"><td class="rk">13</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Tyler Burton</td><td class="age">26-273</td><td class="age">SF</td><td class="l tm" title="G League: 30; NBA: 12">Santa Cruz Warriors</td><td class="rat">2.02</td><td>42</td><td class="st">17.0</td><td class="st">5.0</td><td class="st">2.1</td></tr>
+<tr data-b="Japan|49|17.1|5.7|2.6;Asian World Cup Qualifier|6|22.5|9.0|2.2;G League|1|3.0|6.0|2.0"><td class="rk">14</td><td class="fl"><img src="https://flagcdn.com/w40/kr.png" alt="" loading="lazy"></td><td class="l pl">Hyunjung Lee</td><td class="age">26-019</td><td class="age">SF</td><td class="l tm" title="Japan: 49; Asian World Cup Qualifier: 6; G League: 1">Rip City Remix</td><td class="rat">1.89</td><td>56</td><td class="st">17.4</td><td class="st">6.0</td><td class="st">2.6</td></tr>
+<tr data-b="G League|22|21.9|5.2|2.0;NBA|14|11.9|2.4|1.1;NBA Preseason|2|7.0|3.0|0.5"><td class="rk">15</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Blake Hinson</td><td class="age">26-320</td><td class="age">SF</td><td class="l tm" title="G League: 22; NBA: 14">Stockton Kings</td><td class="rat">1.88</td><td>36</td><td class="st">17.4</td><td class="st">4.1</td><td class="st">1.6</td></tr>
+<tr data-b="G League|40|17.9|3.0|6.0;Puerto Rico|37|15.8|3.7|6.3"><td class="rk">16</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Jalen Crutcher</td><td class="age">27-116</td><td class="age">PG</td><td class="l tm" title="G League: 40; Puerto Rico: 37">Iowa Wolves</td><td class="rat">1.82</td><td>77</td><td class="st">16.9</td><td class="st">3.3</td><td class="st">6.2</td></tr>
+<tr data-b="Euroleague|11|4.5|2.5|0.3;NBA|9|3.8|3.3|0.9;European World Cup Qualifier|8|11.0|4.2|0.4;Greece|7|9.9|5.1|0.9;Spain|5|8.8|3.0|0.6;G League|5|19.4|11.2|1.0"><td class="rk">17</td><td class="fl"><img src="https://flagcdn.com/w40/tr.png" alt="" loading="lazy"></td><td class="l pl">Omer Yurtseven</td><td class="age">28-145</td><td class="age">C</td><td class="l tm" title="Euroleague: 11; NBA: 9; European World Cup Qualifier: 8; Greece: 7; Spain: 5; G League: 5">Rio Grande Valley Vipers</td><td class="rat">1.79</td><td>45</td><td class="st">8.5</td><td class="st">4.4</td><td class="st">0.6</td></tr>
+<tr data-b="China|45|9.0|10.4|3.3"><td class="rk">18</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Eric Moreland</td><td class="age">34-322</td><td class="age">C</td><td class="l tm" title="China: 45">Free Agent</td><td class="rat">1.78</td><td>45</td><td class="st">9.0</td><td class="st">10.4</td><td class="st">3.3</td></tr>
+<tr data-b="G League|28|22.9|5.5|4.5;China|7|6.7|1.6|2.7;NBA|4|11.0|6.2|3.0;NBA Preseason|1|5.0|0.0|0.0"><td class="rk">19</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Alondes Williams</td><td class="age">27-145</td><td class="age">PG</td><td class="l tm" title="G League: 28; China: 7; NBA: 4">Capital City Go-Go</td><td class="rat">1.77</td><td>39</td><td class="st">18.4</td><td class="st">4.8</td><td class="st">3.9</td></tr>
+<tr data-b="G League|41|23.3|5.3|3.0;China|4|18.5|4.2|2.8;Intercontinental Cup|4|16.2|2.2|1.0;NBA Preseason|1|0.0|2.0|0.0"><td class="rk">20</td><td class="fl"><img src="https://flagcdn.com/w40/do.png" alt="" loading="lazy"></td><td class="l pl">Lester Quinones</td><td class="age">25-360</td><td class="age">SG</td><td class="l tm" title="G League: 41; China: 4">Sioux Falls Skyforce</td><td class="rat">1.72</td><td>45</td><td class="st">21.9</td><td class="st">4.9</td><td class="st">2.8</td></tr>
+<tr data-b="G League|39|24.7|4.9|4.6;NBA Preseason|3|6.3|0.7|1.3;NBA|1|12.0|3.0|0.0"><td class="rk">21</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Tristen Newton</td><td class="age">25-199</td><td class="age">PG</td><td class="l tm" title="G League: 39; NBA: 1">Stockton Kings</td><td class="rat">1.72</td><td>40</td><td class="st">23.2</td><td class="st">4.6</td><td class="st">4.2</td></tr>
+<tr data-b="G League|26|20.0|4.6|2.4;Canada|24|27.7|7.5|3.5"><td class="rk">22</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Teddy Allen</td><td class="age">28-157</td><td class="age">SG</td><td class="l tm" title="G League: 26; Canada: 24">Free Agent</td><td class="rat">1.63</td><td>50</td><td class="st">23.7</td><td class="st">6.0</td><td class="st">2.9</td></tr>
+<tr data-b="NCAA|33|20.6|3.8|4.3;G League|1|17.0|5.0|3.0"><td class="rk">23</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Nick Boyd</td><td class="age">25-202</td><td class="age">PG</td><td class="l tm" title="NCAA: 33; G League: 1">Santa Cruz Warriors</td><td class="rat">1.60</td><td>34</td><td class="st">20.5</td><td class="st">3.9</td><td class="st">4.3</td></tr>
+<tr data-b="G League|36|19.6|7.5|2.3;NBA|3|4.3|3.0|1.0"><td class="rk">24</td><td class="fl"><img src="https://flagcdn.com/w40/ht.png" alt="" loading="lazy"></td><td class="l pl">Skal Labissiere</td><td class="age">30-238</td><td class="age">C</td><td class="l tm" title="G League: 36; NBA: 3">Capital City Go-Go</td><td class="rat">1.54</td><td>39</td><td class="st">18.5</td><td class="st">7.2</td><td class="st">2.2</td></tr>
+<tr data-b="G League|38|18.6|2.6|5.1;Canada|19|23.3|4.8|6.8;Intercontinental Cup|4|12.5|2.5|5.5"><td class="rk">25</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Sean East</td><td class="age">26-359</td><td class="age">PG</td><td class="l tm" title="G League: 38; Canada: 19">Stockton Kings</td><td class="rat">1.52</td><td>57</td><td class="st">19.7</td><td class="st">3.2</td><td class="st">5.7</td></tr>
+<tr data-b="G League|34|18.0|10.6|3.2;NBA|4|2.5|1.2|0.5"><td class="rk">26</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Hunter Dickinson</td><td class="age">25-351</td><td class="age">C</td><td class="l tm" title="G League: 34; NBA: 4">Laketown Squadron</td><td class="rat">1.47</td><td>38</td><td class="st">16.4</td><td class="st">9.6</td><td class="st">2.9</td></tr>
+<tr data-b="NBA|24|4.6|1.5|0.9;G League|10|21.3|4.6|4.3;NBA Preseason|4|6.8|2.5|0.8"><td class="rk">27</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Malaki Branham</td><td class="age">23-183</td><td class="age">SG</td><td class="l tm" title="NBA: 24; G League: 10">Osceola Magic</td><td class="rat">1.47</td><td>34</td><td class="st">9.2</td><td class="st">2.4</td><td class="st">1.8</td></tr>
+<tr data-b="NBA|51|3.5|1.8|1.4;NBA Preseason|5|6.4|3.4|2.8;G League|3|20.3|4.0|4.7"><td class="rk">28</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Dalen Terry</td><td class="age">24-122</td><td class="age">SG</td><td class="l tm" title="NBA: 51; G League: 3">Free Agent</td><td class="rat">1.46</td><td>54</td><td class="st">4.6</td><td class="st">2.1</td><td class="st">1.7</td></tr>
+<tr data-b="G League|26|18.7|5.7|2.8;NBA|14|8.0|2.1|1.0"><td class="rk">29</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Nate Williams</td><td class="age">27-272</td><td class="age">SG</td><td class="l tm" title="G League: 26; NBA: 14">Golden State Warriors</td><td class="rat">1.45</td><td>40</td><td class="st">14.9</td><td class="st">4.5</td><td class="st">2.1</td></tr>
+<tr data-b="Puerto Rico|28|12.8|3.9|8.7;Israel|11|11.9|3.5|5.6;Champions League|5|16.0|2.6|5.4"><td class="rk">30</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Derrick Walton</td><td class="age">31-222</td><td class="age">PG</td><td class="l tm" title="Puerto Rico: 28; Israel: 11; Champions League: 5">Free Agent</td><td class="rat">1.43</td><td>44</td><td class="st">12.9</td><td class="st">3.7</td><td class="st">7.6</td></tr></tbody></table><p class="key">no NBA contract and no overseas club — team: Free Agent if unsigned, his G League club if he has one this season, otherwise the last club he played for, preseason included — retired players excluded</p></section>
+</div>
+<script>
+(function(){
+  var sel = document.getElementById("pick");
+  var secs = [].slice.call(document.querySelectorAll("section"));
+  if(sel){
+    sel.addEventListener("change", function(){
+      secs.forEach(function(s){
+        s.className = (s.id === sel.value) ? "on" : "";
+      });
+    });
+  }
+  // ONE PLAYER OPEN AT A TIME (v1.31): his competitions, a line each.
+  var openRow = null;
+  function closeAll(){
+    [].slice.call(document.querySelectorAll("tr.sub")).forEach(function(x){
+      x.parentNode.removeChild(x);
+    });
+    if(openRow) openRow.classList.remove("open");
+    openRow = null;
+  }
+  document.addEventListener("click", function(ev){
+    var tr = ev.target.closest ? ev.target.closest("tbody tr[data-b]") : null;
+    if(!tr) return;
+    var was = (openRow === tr);
+    closeAll();
+    if(was) return;
+    var n = tr.cells.length, after = tr;
+    tr.getAttribute("data-b").split(";").forEach(function(part){
+      var f = part.split("|");
+      if(f.length < 5) return;
+      var s = document.createElement("tr");
+      s.className = "sub";
+      s.innerHTML = "<td></td><td></td>"
+        + '<td class="lg" colspan="' + (n - 7) + '"></td>'
+        + "<td></td><td>" + f[1] + '</td><td class="st">' + f[2]
+        + '</td><td class="st">' + f[3] + '</td><td class="st">' + f[4] + "</td>";
+      s.cells[2].textContent = f[0];
+      after.parentNode.insertBefore(s, after.nextSibling);
+      after = s;
+    });
+    tr.classList.add("open");
+    openRow = tr;
+  });
+  // Sorting, per table, so one view's order does not follow the reader into
+  // another. Rows are reordered in place; nothing is fetched and no table
+  // changes height.
+  [].slice.call(document.querySelectorAll("table")).forEach(function(tbl){
+    var tb = tbl.querySelector("tbody");
+    if(!tb) return;
+    var all = [].slice.call(tb.querySelectorAll("tr"));
+    var key = -1, desc = true;
+    var ths = [].slice.call(tbl.querySelectorAll("thead th"));
+    ths.forEach(function(th, i){
+      if(!th.getAttribute("data-s")) return;
+      th.addEventListener("click", function(){
+        if(key === i) desc = !desc; else { key = i; desc = true; }
+        var numeric = th.getAttribute("data-s") === "n";
+        all.sort(function(a, b){
+          var x = a.cells[i].textContent.trim(), y = b.cells[i].textContent.trim();
+          if(numeric){
+            var nx = parseFloat(x) || 0, ny = parseFloat(y) || 0;
+            return desc ? ny - nx : nx - ny;
+          }
+          return desc ? y.localeCompare(x) : x.localeCompare(y);
+        });
+        ths.forEach(function(o){ o.removeAttribute("aria-sort"); });
+        th.setAttribute("aria-sort", desc ? "descending" : "ascending");
+        closeAll();
+        tb.innerHTML = "";
+        all.forEach(function(r, n){
+          r.cells[0].textContent = n + 1;
+          tb.appendChild(r);
+        });
+      });
+    });
+  });
+})();
+</script>
+</body></html>
